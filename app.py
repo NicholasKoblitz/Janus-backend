@@ -39,7 +39,7 @@ def register_user():
     return (jsonify(user=serialized_user), 201)
 
 
-@app.route('/api/login')
+@app.route('/api/login', methods=["POST"])
 def login():
     """Checks user is in database"""
 

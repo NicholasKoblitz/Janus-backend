@@ -90,7 +90,7 @@ class RoutesTests(TestCase):
 
     def test_user_login(self):
         with app.test_client() as c:
-            resp = c.get(
+            resp = c.post(
                 "/api/login", json={
                     "username": "blue",         "password": "test"
                 })
