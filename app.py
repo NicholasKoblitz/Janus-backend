@@ -143,11 +143,11 @@ def remove_course(course_id):
 
     course = Course.query.get_or_404(course_id)
     message = {
-        course: course.course.name,
+        course: course.name,
         message: "Deleted"
     }
 
     db.session.delete(course)
     db.session.commit()
 
-    return (jsonify(message))
+    return (jsonify(message=message), 200)
