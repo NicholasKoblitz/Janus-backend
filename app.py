@@ -138,12 +138,13 @@ def assign_student_to_course():
     return (jsonify(assigned=serialized_student), 201)
 
 
-@app.route('/api/courses/<course_id>/remove', methods=["DELETE"])
+@app.route('/api/courses/<course_id>/remove')
 def remove_course(course_id):
     """Deletes the selected course"""
 
-    course = Course.query.filter_by(course_id=course_id).delete()
+    course = Course.query.get_or_404(course_id)
 
+    db.session.delete(course)
     db.session.commit()
 
     return (jsonify(message={message: "Deleted"}), 200)
