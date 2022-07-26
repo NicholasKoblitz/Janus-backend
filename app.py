@@ -1,4 +1,5 @@
 from crypt import methods
+from email import message
 import os
 from flask import Flask, make_response, request, jsonify, Response
 from models import db, connect_db, User, Course, UserCourse, serialize_course, serialize_user, serialize_user_course
@@ -141,9 +142,8 @@ def assign_student_to_course():
 def remove_course(course_id):
     """Deletes the selected course"""
 
-    course = Course.query.get_or_404(course_id)
+    course = Course.query.filter_by(course_id=course_id).delete()
 
-    db.session.delete(course)
     db.session.commit()
 
-    return (jsonify(course=course), 200)
+    return (jsonify(message={message: "Deleted"}), 200)
