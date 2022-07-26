@@ -143,7 +143,6 @@ def remove_course(course_id):
 
     course = Course.query.get_or_404(course_id)
     message = {
-        course: course.name,
         message: "Deleted"
     }
 
