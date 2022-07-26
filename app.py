@@ -85,6 +85,9 @@ def create_course():
 
     course = Course(course_id=course_id, name=name)
 
+    db.session.add(course)
+    db.session.commit()
+
     serialized_course = serialize_course(course)
 
     return (jsonify(course=serialized_course), 201)
@@ -125,6 +128,9 @@ def assign_student_to_course():
 
     assigned_student = UserCourse(
         user_id=user.id, course_id=course.course_id)
+
+    db.session.add(assigned_student)
+    db.session.commit()
 
     serialized_student = serialize_user_course(assigned_student)
 
