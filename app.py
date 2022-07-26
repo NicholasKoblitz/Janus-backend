@@ -1,3 +1,4 @@
+from crypt import methods
 import os
 from flask import Flask, make_response, request, jsonify, Response
 from models import db, connect_db, User, Course, UserCourse, serialize_course, serialize_user, serialize_user_course
@@ -112,7 +113,7 @@ def get_courses_by_student(user_id):
     return (jsonify(courses=serialized_courses), 200)
 
 
-@ app.route('/api/users/assign', methods=["POST"])
+@app.route('/api/users/assign', methods=["POST"])
 def assign_student_to_course():
     """Assigns a student to a course"""
 
@@ -128,3 +129,19 @@ def assign_student_to_course():
     serialized_student = serialize_user_course(assigned_student)
 
     return (jsonify(assigned=serialized_student), 201)
+
+
+@app.route('/api/courses/<course_id>/remove', methods=["DELETE"])
+def remove_course(course_id):
+    """Deletes the selected course"""
+
+    course = Course.query.get_or_404(course_id)
+    message = {
+        course: course.course.name,
+        message: "Deleted"
+    }
+
+    db.session.delete(course)
+    db.session.commit()
+
+    return (jsonify(message))
