@@ -148,7 +148,7 @@ def remove_course(course_id):
     db.session.commit()
 
     message = {
-        message: "Course Deleted"
+        "message": "Course Deleted"
     }
 
-    return (jsonify(message=message), 200)
+    return (jsonify(msg=message), 200)

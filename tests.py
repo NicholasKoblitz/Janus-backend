@@ -207,3 +207,17 @@ class RoutesTests(TestCase):
                     "course_id": "BIO223"
                 }
             })
+
+    def test_delete_course(self):
+        with app.test_client() as c:
+            resp = c.get(f'/api/courses/{self.bio.course_id}/remove')
+
+            data = resp.json
+
+            self.assertEqual(resp.status_code, 200)
+
+            self.assertEqual(data, {
+                "msg": {
+                    "message": "Course Deleted"
+                }
+            })
