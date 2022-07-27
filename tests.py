@@ -88,6 +88,20 @@ class RoutesTests(TestCase):
             })
             self.assertEqual(User.query.count(), 2)
 
+    def test_user_register_failed(self):
+        with app.test_client() as c:
+            resp = c.post("/api/register", json=DATA_1_2)
+            bad_request = c.post("/api/register", json=DATA_1_2)
+
+        self.assertEqual(bad_request.status_code, 400)
+
+        data = bad_request.json
+        self.assertEqual(data, {
+            "message": {
+                "message": "Username already taken"
+            }
+        })
+
     def test_user_login(self):
         with app.test_client() as c:
             resp = c.post(
@@ -136,6 +150,19 @@ class RoutesTests(TestCase):
                 "course": {
                     "course_id": self.bio.course_id,
                     "name": self.bio.name
+                }
+            })
+
+    def test_course_not_found(self):
+        with app.test_client() as c:
+            resp = c.get("/api/courses/CHEM001")
+
+            data = resp.json
+
+            self.assertEqual(resp.status_code, 404)
+            self.assertEqual(data, {
+                "message": {
+                    "message": "No course was found"
                 }
             })
 

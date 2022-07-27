@@ -1,5 +1,6 @@
 from crypt import methods
 from email import message
+import json
 import os
 from flask import Flask, make_response, request, jsonify, Response
 from models import db, connect_db, User, Course, UserCourse, serialize_course, serialize_user, serialize_user_course
@@ -31,14 +32,19 @@ def register_user():
     password = request.json["password"]
     is_teacher = request.json["is_teacher"]
 
-    user = User.signup(first_name, last_name, username,
-                       password, is_teacher)
+    user = User.query.filter_by(username=username).first()
 
-    db.session.commit()
+    if not user:
+        user = User.signup(first_name, last_name, username,
+                           password, is_teacher)
 
-    serialized_user = serialize_user(user)
+        db.session.commit()
 
-    return (jsonify(user=serialized_user), 201)
+        serialized_user = serialize_user(user)
+
+        return (jsonify(user=serialized_user), 201)
+    else:
+        return (jsonify(message={"message": "Username already taken"}), 400)
 
 
 @app.route('/api/login', methods=["POST"])
@@ -70,11 +76,13 @@ def get_all_courses():
 def get_course(course_id):
     """Get a single course"""
 
-    course = Course.query.get_or_404(course_id)
+    course = Course.query.get(course_id)
 
-    serialized_course = serialize_course(course)
-
-    return (jsonify(course=serialized_course), 200)
+    if not course:
+        return (jsonify(message={"message": "No course was found"}), 404)
+    else:
+        serialized_course = serialize_course(course)
+        return (jsonify(course=serialized_course), 200)
 
 
 @app.route('/api/courses', methods=["POST"])
