@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "Root Schema",
+    "required": [
+        "courseId",
+        "name"
+    ],
+    "properties": {
+        "courseId": {
+            "type": "string",
+            "default": "",
+            "title": "The courseId Schema",
+            "examples": [
+                "MAT101"
+            ]
+        },
+        "name": {
+            "type": "string",
+            "default": "",
+            "title": "The name Schema",
+            "examples": [
+                "Math"
+            ]
+        }
+    },
+    "examples": [{
+        "course_id": "MAT101",
+        "name": "Math"
+    }]
+}
