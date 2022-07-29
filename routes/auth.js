@@ -21,8 +21,9 @@ router.post('/login', async function(req, res, next) {
         }
         const {username, password} = req.body;
         const user = await User.authenticate(username, password);
+        const isTeacher = user.isTeacher;
         const token = createToken(user);
-        return res.json({token});
+        return res.json({token, isTeacher});
     }
     catch (err) {
         return next(err);
