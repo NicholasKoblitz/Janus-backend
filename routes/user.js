@@ -20,7 +20,7 @@ router.get('/:username/courses', ensureCorrectUserOrTeacher,async function(req, 
     }
 });
 
-router.post('/assign', ensureTeacher, async function(req, res, next) {
+router.post('/assign', ensureCorrectUserOrTeacher, async function(req, res, next) {
     try{
         const validator = jsonschema.validate(req.body, assignUserSchema);
         if(!validator.valid) {
