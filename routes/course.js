@@ -1,7 +1,7 @@
 /** Routes for courses. */
 const jsonschema = require("jsonschema");
 const express = require("express");
-const { ensureCorrectUserOrTeacher, ensureTeacher } = require("../middleware/auth");
+const { ensureCorrectUserOrTeacher, ensureTeacher, ensureLoggedIn } = require("../middleware/auth");
 const newCourseSchema = require('../schemas/newCourseSchema.json');
 const { BadRequestError } = require("../expressError");
 const Course = require("../models/course");
@@ -18,7 +18,7 @@ router.get('/', ensureCorrectUserOrTeacher, async function(req, res, next) {
     }
 });
 
-router.get('/:courseId', ensureCorrectUserOrTeacher, async function(req, res, next) {
+router.get('/:courseId', ensureLoggedIn, async function(req, res, next) {
     try{
         const course = await Course.getSingleCourse(req.params.courseId);
         return res.json({course})
@@ -44,7 +44,7 @@ router.post('/', ensureTeacher, async function(req, res, next) {
     }
 })
 
-router.get('/:courseId/users', ensureCorrectUserOrTeacher, async function(req, res, next){
+router.get('/:courseId/users', ensureLoggedIn, async function(req, res, next){
     try{
         const users = await Course.getUsersByCourse(req.params.courseId);
         return res.json({users})
