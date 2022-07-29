@@ -20,7 +20,7 @@ router.get('/', ensureCorrectUserOrTeacher, async function(req, res, next) {
 
 router.get('/:courseId', ensureCorrectUserOrTeacher, async function(req, res, next) {
     try{
-        const course = Course.getSingleCourse(req.params.courseId);
+        const course = await Course.getSingleCourse(req.params.courseId);
         return res.json({course})
     }
     catch(err) {
