@@ -1,14 +1,15 @@
 const app = require('../app')
 const express = require("express");
 const router = new express.Router();
-const wsExpress = require('express-ws')(app);
 
-app.ws('/chat', function(we, req) {
+router.ws('/chat', function(we, req) {
+    ws.on("message", function(msg) {
+        console.log(msg)
+    })
     ws.send("Test")
 })
 
-module.exports = wsExpress;
-
+module.exports = router;
 
 
 

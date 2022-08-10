@@ -9,9 +9,11 @@ const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/user");
 const courseRoutes = require("./routes/course");
+const wsRoutes = require('./routes/webSocket');
 
 
 const app = express();
+const expresWs = require('express-ws')(app);
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +23,7 @@ app.options('*', cors())
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/courses", courseRoutes);
+app.use("/api/ws", wsRoutes);
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
