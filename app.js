@@ -9,7 +9,7 @@ const { authenticateJWT } = require("./middleware/auth");
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/user");
 const courseRoutes = require("./routes/course");
-const wsRoutes = require('./routes/webSocket');
+// const wsRoutes = require('./routes/webSocket');
 
 
 const app = express();
@@ -23,7 +23,16 @@ app.options('*', cors())
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/courses", courseRoutes);
-app.use("/api/ws", wsRoutes);
+// app.use("/api/ws", wsRoutes);
+
+
+
+app.ws('/api/ws/chat', function(we, req) {
+  ws.on("message", function(msg) {
+      console.log(msg)
+  })
+  ws.send("Test")
+})
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
