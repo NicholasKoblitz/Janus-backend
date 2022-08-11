@@ -44,7 +44,7 @@ app.ws('/api/ws/chat', function(ws, req) {
             Accept: 'application/json'
         }
     })
-    ws.send(res);
+    ws.send(res.data.data);
     }
     else if(typeof data === 'object') {
       const {guid, text, uid} = data;
