@@ -33,7 +33,7 @@ app.use("/api/courses", courseRoutes);
 
 app.ws('/api/ws/chat', function(ws, req) {
   ws.on("message", async function(data) {
-
+    console.log(data);
     if(typeof data === 'string') {
       const res = await axios({
         method: 'get',
