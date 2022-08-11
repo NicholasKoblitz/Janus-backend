@@ -10,10 +10,13 @@ const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/user");
 const courseRoutes = require("./routes/course");
 // const wsRoutes = require('./routes/webSocket');
+const {COMET_URL} = require('./config');
+const {API_KEY} = require('./config')
+
 
 
 const app = express();
-const expresWs = require('express-ws')(app);
+const expressWs = require('express-ws')(app);
 
 app.use(cors());
 app.use(express.json());
@@ -28,10 +31,44 @@ app.use("/api/courses", courseRoutes);
 
 
 app.ws('/api/ws/chat', function(we, req) {
-  ws.on("message", function(msg) {
-      console.log(msg)
+  ws.on("message", async function(data) {
+
+    if(typeof data === 'string') {
+      const res = await axios({
+        method: 'get',
+        url: `${COMET_URL}groups/${data}/messages`,
+        headers: {
+            apiKey: API_KEY,
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        }
+    })
+    ws.send(res);
+    }
+    else if(typeof data === 'object') {
+      const {guid, text, uid} = data;
+      await axios({
+        method: 'post',
+        url: `${COMET_URL}messages`,
+        headers: {
+            apiKey: API_KEY,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            onBehalfOf: username
+        },
+        data: {
+            category: 'message',
+            type: "text",
+            data: {
+                text: msg
+            },
+            receiver: guid,
+            receiverType: "group",
+        }
+    })
+    }
   })
-  ws.send("Test")
+  
 })
 
 /** Handle 404 errors -- this matches everything */
