@@ -1,12 +1,12 @@
 const {Client} = require('pg');
-const {getDatabaseUrl} = require('./config');
+const {getDatabaseUrl, PGPORT, PGDATABASE, PGPASSWORD, PGHOST, PGUSER} = require('./config');
 
 let db;
 
 if(process.env.NODE_ENV === "production") {
     db = new Client({
         user: 'postgres',
-        connectionString: getDatabaseUrl(),
+        connectionString: `postgresql://${ PGUSER }:${ PGPASSWORD }@${ PGHOST }:${ PGPORT }/${ PGDATABASE }`,
         password: "JMkENYAGvQNc6NkyAheT",
         ssl: {
             rejectUnauthorized: false
