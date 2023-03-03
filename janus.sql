@@ -1,6 +1,8 @@
 \echo 'Delete and recreate janus db?'
 \prompt 'Return for yes or control-C to cancel >' foo
 
+\c postgres
+
 DROP DATABASE janus;
 CREATE DATABASE janus;
 \connect janus;
