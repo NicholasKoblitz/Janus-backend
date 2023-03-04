@@ -6,7 +6,7 @@ let db;
 if(process.env.NODE_ENV === "production") {
     db = new Client({
         user: 'postgres',
-        connectionString: `postgresql://${ PGUSER }:${ PGPASSWORD }@${ PGHOST }:${ PGPORT }/${ PGDATABASE }`,
+        connectionString: `postgresql://postgres:JMkENYAGvQNc6NkyAheT@containers-us-west-57.railway.app:6431/railway`,
         password: "JMkENYAGvQNc6NkyAheT",
         ssl: {
             rejectUnauthorized: false
