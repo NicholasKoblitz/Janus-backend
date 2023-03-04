@@ -29,7 +29,7 @@ app.use("/api/users", usersRoutes);
 app.use("/api/courses", courseRoutes);
 // app.use("/api/ws", wsRoutes);
 
-
+console.log(process.env.DATABASE_URL)
 
 app.ws('/api/ws/chat', function(ws, req) {
   ws.on("message", async function(data) {
