@@ -5,9 +5,9 @@ let db;
 
 if(process.env.NODE_ENV === "production") {
     db = new Client({
-        user: 'janus_backend_user',
-        connectionString: `postgres://janus_backend_user:ciKucrPjvbLbjT5nU86qCaoO7t8zdKCP@dpg-clue7r8cmk4c73891hcg-a/janus_backend`,
-        password: "ciKucrPjvbLbjT5nU86qCaoO7t8zdKCP",
+        user: 'janus_database_user',
+        connectionString: getDatabaseUrl(),
+        password: "jrjeehjQlBxAoavEiTaaBHPV2Ud1juiI",
         ssl: {
             rejectUnauthorized: false
         }
@@ -15,9 +15,8 @@ if(process.env.NODE_ENV === "production") {
 }
 else {
     db = new Client({
-        user: 'janus_backend_user',
-        connectionString: getDatabaseUrl(),
-        password: "ciKucrPjvbLbjT5nU86qCaoO7t8zdKCP"
+        user: 'nick',
+        connectionString: getDatabaseUrl()
     });
 }
 

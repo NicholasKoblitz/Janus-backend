@@ -1,6 +1,6 @@
 const app = require("./app");
 const { PGPORT } = require("./config");
 
-app.listen(PGPORT, function () {
-  console.log(`Started on http://localhost:${PORT}`);
+app.listen(5432, function () {
+  console.log(`Started on http://localhost:3001`);
 });
