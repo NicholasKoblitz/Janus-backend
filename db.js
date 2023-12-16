@@ -15,9 +15,9 @@ if(process.env.NODE_ENV === "production") {
 }
 else {
     db = new Client({
-        user: 'nick',
+        user: 'janus_backend_user',
         connectionString: getDatabaseUrl(),
-        password: "sonic0125"
+        password: "ciKucrPjvbLbjT5nU86qCaoO7t8zdKCP"
     });
 }
 
