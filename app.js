@@ -22,7 +22,7 @@ const expressWs = require('express-ws')(app);
 app.use(cors());
 app.use(express.json());
 app.use(authenticateJWT);
-app.options('*', cors())
+// app.options('*', cors())
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
